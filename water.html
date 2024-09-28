@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WATER Reminder</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: url(back.jpg);
+    background-size: cover;
+}
+
+.reminder-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color:lightblue;
+}
+
+h1 {
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input {
+    width: 50%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+.submit{
+    width: 20%;
+    background-color: #00ffff;
+    margin-left: 350px;
+    border-radius: 6px;
+    border:solid 2px black;
+}
+    </style>
+</head>
+<body>
+    <form action="mainintern.html" method="get" > 
+    <div class="reminder-container">
+        <h1>WATER Reminder</h1>
+         <h2>DRINK WATER</h2>
+         <h3>SET A TIME INTERVAL FOR DRINKING WATER </h3>
+         <label for="settime">TIME INTERVAL:</label>
+         <input type="number" name="num" id="num" required>
+
+        <input type="submit" value="Done" class="submit">
+    </div>
+</form>
+</body>
+</html>
