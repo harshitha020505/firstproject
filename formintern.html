@@ -3,52 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SET REMAINDER</title>
-    <link rel="stylesheet" href="codesprintpj.css">
+    <title>Medication Reminder</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.reminder-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: url(pill1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+h1 {
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input {
+    width: 50%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+#output {
+    margin-top: 20px;
+    color: #ff0000;
+    font-weight: bold;
+}
+.submit{
+    width: 20%;
+    background-color: #00ffff;
+    margin-left: 350px;
+    border-radius: 6px;
+    border:solid 2px black;
+}
+    </style>
 </head>
 <body>
-   <div class="main1"> 
-    <header>
-        <nav>
-            <h1>SET REMAINDERS</h1>
-            <a href="#about us">About Us</a>
-            <a href="#Contact Us">Contact Us</a>
-        </nav>
-    </header>
-    <main>
-        <section   class="super">
-                <div class="remainder" id="medicinesremainder"> </div>
-                <form action="med.html" > 
-                    <button class="but">MEDICINE REMAINDER</button>
-                </form>
-        </section>
-        <section   class="super">
-            <div  class="remainder"  id="Waterremainder"></div>
-            <form  action="drink.html"  >
-                <button class="but">WATER REMAINDER</button>
-            </form>
-        </section>
-        <section    class="super">
-            <div  class="remainder"  id="otherremainder"></div>
-            <form action="other.html">
-                <button class="but">OTHER REMAINDER</button>
-            </form>
-        </section>
-        <section class="super">
-            <div class="remainder" id="tips"></div>
-            <button class="but">HEALTH TIPS</button>
-        </section>
-    </main>
-    <footer> 
-     <section id="about us" class="foot">
-        <h3>About Us</h3>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae, consequatur, cupiditate molestiae quo veritatis quisquam repudiandae explicabo rerum non iste temporibus magni fugiat deserunt minima vero magnam quos amet cum eaque fuga ipsam officia consequuntur! Cupiditate iusto ratione autem, sed quaerat accusamus fugiat soluta dolorem doloremque at quasi odit quam?
-     </section>
-     <section id="Contact Us" class="foot1">
-        <h3>Contact Us</h3>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis modi nobis eligendi laboriosam aperiam ducimus, odit odio laborum dolor laudantium ipsum veritatis quaerat. Suscipit, delectus et consequatur blanditiis sequi asperiores?
-     </section>
-    </footer>
-  </div> 
+    <form action="codesprintpj.html" method="get" > 
+    <div class="reminder-container">
+        <h1>Medication Reminder</h1>
+        <label for="medicineName">Medicine Name:</label>
+        <input type="text" id="medicineName" placeholder="Enter medicine name" required>
+        <textarea name="mednames" id="mednames" rows="5" cols="100"></textarea>
+        <label for="date">DATE:</label>
+        <input type="date" id="date" placeholder="select date" required>
+        <div id="output"></div>
+        <label for="expirydates">EXPIRY DATE:</label>
+        <textarea name="exp" id="exp" rows="5" cols="100" required></textarea>
+        <label for="about">ABOUT MEDICINE:</label>
+        <textarea name="medicine" id="medicine" rows="5" cols="100"></textarea>
+        <label for="time">TIME:</label>
+        <input type="time" name="time1" id="time1" required>
+        <br>
+        <br>
+        <input type="submit" value="Done" class="submit">
+    </div>
+</form>
 </body>
 </html>
