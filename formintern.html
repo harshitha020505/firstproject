@@ -57,9 +57,11 @@ input {
     </style>
 </head>
 <body>
-    <form action="codesprintpj.html" method="get" > 
+    <form action="mainintern.html" method="get" > 
     <div class="reminder-container">
         <h1>Medication Reminder</h1>
+        <label>Enter Your Email:</label>
+        <input type="email" id="email" placeholder="Enter email address" required />
         <label for="medicineName">Medicine Name:</label>
         <input type="text" id="medicineName" placeholder="Enter medicine name" required>
         <textarea name="mednames" id="mednames" rows="5" cols="100"></textarea>
@@ -77,5 +79,51 @@ input {
         <input type="submit" value="Done" class="submit">
     </div>
 </form>
+<script type="text/javascript">
+    (function() {
+        emailjs.init("MHIAuC0PWZ5u6zb8T"); 
+    })();
+
+    document.getElementById('reminderForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get form values
+        const email = document.getElementById('email').value; // Get the recipient's email from the input
+        const medicineName = document.getElementById('medicineName').value;
+        const message = document.getElementById('medicine').value; // Assuming this is the message
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time1').value;
+
+        // Combine date and time for the reminder
+        const reminderTime = new Date(`${date}T${time}`);
+        const currentTime = new Date();
+        const delay = reminderTime - currentTime;
+
+        if (delay <= 0) {
+            alert("Please select a future time for the reminder.");
+            return;
+        }
+
+        // Schedule the email sending
+        setTimeout(() => {
+            const emailParams = {
+                username: medicineName,  // Using 'username' as per your template
+                to_email: email,         // Use the recipient's email
+                message: message
+            };
+
+            // Send email via EmailJS
+            emailjs.send('service_uxhnwrp', 'template_9odu4iv', emailParams)
+                .then(function(response) {
+                    document.getElementById('responseMessage').textContent = 'Reminder sent successfully!';
+                    document.getElementById('responseMessage').style.color = 'green';
+                }, function(error) {
+                    document.getElementById('responseMessage').textContent = 'Failed to send the reminder.';
+                    document.getElementById('responseMessage').style.color = 'red';
+                    console.error('Error:', error);
+                });
+        }, delay);
+    });
+</script>
 </body>
 </html>
