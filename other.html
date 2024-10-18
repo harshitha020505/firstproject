@@ -4,79 +4,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medication Reminder</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 20px;
+        }
 
-.reminder-container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: url(other1.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-}
+        .reminder-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-image: url(other1.jpg);
+            background-size: cover;
+            backdrop-filter: blur(5px);
+            margin: 20px;
+        }
 
-h1 {
-    color: #333;
-}
+        h1 {
+            color: #333;
+        }
 
-label {
-    display: block;
-    margin-top: 10px;
-}
+        label {
+            display: block;
+            margin-top: 10px;
+        }
 
-input {
-    width: 50%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid gray;
-    border-radius: 5px;
-}
-#output {
-    margin-top: 20px;
-    color: #ff0000;
-    font-weight: bold;
-}
-.submit{
-    width: 20%;
-    background-color: #00ffff;
-    margin-left: 350px;
-    border-radius: 6px;
-    border:solid 2px black;
-}
+        input {
+            width: 75%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+
+        #output {
+            margin-top: 20px;
+            color: #ff0000;
+            font-weight: bold;
+        }
+
+        .submit {
+            width: 20%;
+            background-color: #00ffff;
+            margin-left: 350px;
+            border-radius: 6px;
+            border: solid 2px black;
+        }
     </style>
 </head>
 <body>
-    <form action="mainintern.html" method="get" > 
     <div class="reminder-container">
         <h1>OTHER Reminder</h1>
-        <label for="medicineName">REMAINDER Name:</label>
-        <input type="text" id="medicineName" placeholder="Enter remainder name" required>
-        <!-- <textarea name="mednames" id="mednames" rows="5" cols="100"></textarea> -->
-        <label for="date">DATE:</label>
-        <input type="date" id="date" placeholder="select date" required>
-        <!-- <div id="output"></div> -->
-         <P>Expiry date if required for ur remainder</P>
-        <label for="expirydates">EXPIRY DATE:</label>
-        <textarea name="exp" id="exp" rows="5" cols="100" ></textarea>
-        <label for="about">ABOUT </label>
-        <textarea name="medicine" id="medicine" rows="5" cols="100"></textarea>
-        <label for="time">TIME:</label>
-        <input type="time" name="time1" id="time1" required>
-        <br>
-        <br>
-        <input type="submit" value="Done" class="submit">
+        <form id="reminderForm" action="mainintern.html">
+            <label>Enter Your Email:</label>
+            <input type="email" id="email" placeholder="Enter email address" required />
+            <label for="medicineName">REMAINDER Name:</label>
+            <input type="text" id="medicineName" placeholder="Enter remainder name" required>
+            <label for="date">DATE:</label>
+            <input type="date" id="date" required>
+            <p>Expiry date if required for your reminder</p>
+            <label for="exp">EXPIRY DATE:</label>
+            <textarea name="exp" id="exp" rows="5"></textarea>
+            <label for="medicine">ABOUT:</label>
+            <textarea name="medicine" id="medicine" rows="5"></textarea>
+            <label for="time">TIME:</label>
+            <input type="time" id="time1" required>
+            <input type="submit" value="Done" class="submit"/>
+        </form>
+        <div id="responseMessage"></div>
     </div>
-</form>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("MHIAuC0PWZ5u6zb8T"); 
+        })();
+
+        document.getElementById('reminderForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get form values
+            const email = document.getElementById('email').value; // Get the recipient's email from the input
+            const medicineName = document.getElementById('medicineName').value;
+            const message = document.getElementById('medicine').value; // Assuming this is the message
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time1').value;
+
+            // Combine date and time for the reminder
+            const reminderTime = new Date(`${date}T${time}`);
+            const currentTime = new Date();
+            const delay = reminderTime - currentTime;
+
+            if (delay <= 0) {
+                alert("Please select a future time for the reminder.");
+                return;
+            }
+
+            // Schedule the email sending
+            setTimeout(() => {
+                const emailParams = {
+                    username: medicineName,  // Using 'username' as per your template
+                    to_email: email,         // Use the recipient's email
+                    message: message
+                };
+
+                // Send email via EmailJS
+                emailjs.send('service_uxhnwrp', 'template_9odu4iv', emailParams)
+                    .then(function(response) {
+                        document.getElementById('responseMessage').textContent = 'Reminder sent successfully!';
+                        document.getElementById('responseMessage').style.color = 'green';
+                    }, function(error) {
+                        document.getElementById('responseMessage').textContent = 'Failed to send the reminder.';
+                        document.getElementById('responseMessage').style.color = 'red';
+                        console.error('Error:', error);
+                    });
+            }, delay);
+        });
+    </script>
 </body>
 </html>
