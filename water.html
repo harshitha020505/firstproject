@@ -7,61 +7,106 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background: url(back.jpg);
-    background-size: cover;
-}
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url(back.jpg);
+            background-size: cover;
+            backdrop-filter: blur(5px);
+        }
 
-.reminder-container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color:lightblue;
-}
+        .reminder-container {
+            background-color: white;
+            height: 320px;
+            width: 600px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: lightblue;
+        }
 
-h1 {
-    color: #333;
-}
+        h1 {
+            color: #333;
+        }
 
-label {
-    display: block;
-    margin-top: 10px;
-}
+        label {
+            display: block;
+            margin-top: 10px;
+        }
 
-input {
-    width: 50%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid gray;
-    border-radius: 5px;
-}
-.submit{
-    width: 20%;
-    background-color: #00ffff;
-    margin-left: 350px;
-    border-radius: 6px;
-    border:solid 2px black;
-}
+        input {
+            width: 50%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+
+        .submit {
+            color: white;
+            width: 20%;
+            background-color: navy;
+            border-radius: 6px;
+            border: solid 2px black;
+            cursor: pointer; /* Changes the cursor to indicate it's clickable */
+        }
     </style>
 </head>
 <body>
-    <form action="mainintern.html" method="get" > 
-    <div class="reminder-container">
-        <h1>WATER Reminder</h1>
-         <h2>DRINK WATER</h2>
-         <h3>SET A TIME INTERVAL FOR DRINKING WATER </h3>
-         <label for="settime">TIME INTERVAL:</label>
-         <input type="number" name="num" id="num" required>
+    <form id="reminderForm" action="mainintern.html">
+        <div class="reminder-container">
+            <h1>Water Reminder</h1>
+            <label>Enter Your Email:</label>
+            <input type="email" id="email" placeholder="Enter email address" required />
+            <h2>The More You Drink The More You Shrink</h2>
+            <h3>Set a Time Interval For Drinking Water (in minutes)</h3>
+            <label for="settime">Time Interval:</label>
+            <input type="number" name="interval" id="interval" required />
+            <br />
+            <input type="submit" value="Done" class="submit">
+            <p id="responseMessage"></p> <!-- Added a paragraph for response messages -->
+        </div>
+    </form>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("MHIAuC0PWZ5u6zb8T");
+        })();
 
-        <input type="submit" value="Done" class="submit">
-    </div>
-</form>
+        document.getElementById('reminderForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const email = document.getElementById('email').value; // Get the recipient's email
+            const interval = document.getElementById('interval').value; // Get the time interval
+
+            // Convert interval from minutes to milliseconds
+            const delay = interval * 60 * 1000;
+
+            // Schedule the email sending
+            setTimeout(() => {
+                const emailParams = {
+                    username: 'harshitha',
+                    to_email: email,
+                    message: 'This is your reminder to drink water!'
+                };
+
+                // Send email via EmailJS
+                emailjs.send('service_uxhnwrp', 'template_ds0gjn9', emailParams)
+                    .then(function(response) {
+                        document.getElementById('responseMessage').textContent = 'Reminder sent successfully!';
+                        document.getElementById('responseMessage').style.color = 'green';
+                    }, function(error) {
+                        document.getElementById('responseMessage').textContent = 'Failed to send the reminder.';
+                        document.getElementById('responseMessage').style.color = 'red';
+                        console.error('Error:', error);
+                    });
+            }, delay);
+        });
+    </script>
 </body>
 </html>
